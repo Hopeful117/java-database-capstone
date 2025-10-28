@@ -6,6 +6,8 @@
 - last_name: VARCHAR(100), NOT NULL
 - email: VARCHAR(255), NOT NULL, UNIQUE
 - phone: VARCHAR(20),NOT NULL
+- address: VARCHAR(255),NOT NULL
+- city: VARCHAR(100), NOT NULL
 - date_of_birth: DATE,NULL
 - gender: ENUM('Male','Female'),NULL
 - password: VARCHAR(255),NOT NULL
