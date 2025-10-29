@@ -5,6 +5,9 @@ import java.sql.Date;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
@@ -16,7 +19,7 @@ import jakarta.validation.constraints.Size;
 public class Patient {
 
     @Id
-    @Generated_value(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long patient_id;
 
     @NotNull(message="Patient first name cannot be null")
@@ -56,6 +59,7 @@ public class Patient {
         Female
     }
     @NotNull(message="Gender cannot be null")
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     protected void setPatientId(Long patient_id) {

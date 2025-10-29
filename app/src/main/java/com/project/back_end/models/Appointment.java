@@ -7,12 +7,13 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 
 import java.beans.Transient;
-import java.lang.reflect.AccessFlag.Location;
+
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -27,11 +28,13 @@ public class Appointment {
 
   @NotNull(message = "Doctor cannot be null")
   @ManyToOne
+  @JoinColumn(name = "doctor_id", nullable = false)
   @OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
   private Doctor doctor;
   
   @NotNull(message = "Patient cannot be null")
   @ManyToOne
+  @JoinColumn(name = "patient_id", nullable = false)
   @OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
   private Patient patient;
   

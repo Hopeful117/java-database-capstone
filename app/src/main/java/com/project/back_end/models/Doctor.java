@@ -5,10 +5,14 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.annotation.Generated;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -18,7 +22,7 @@ import jakarta.validation.constraints.Size;
 public class Doctor {
 
 @Id
-@Generated_value(strategy = GenerationType.IDENTITY)
+@GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long doctor_id;
 
 @NotNull(message = "Doctor  first name cannot be null")
@@ -48,7 +52,13 @@ private String password;
 private String phone;
 
 @ElementCollection
+@CollectionTable(
+    name = "doctor_available_times",
+    joinColumns = @JoinColumn(name = "doctor_id")  
+)
+@Column(name = "available_times") 
 private List<String> availableTimes;
+
 
  
 protected void setId(Long id) {
