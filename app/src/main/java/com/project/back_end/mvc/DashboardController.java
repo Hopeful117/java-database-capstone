@@ -1,6 +1,33 @@
 package com.project.back_end.mvc;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+@Controller
 public class DashboardController {
+    @Autowired
+    private com.project.back_end.services.Service service;
+
+    @org.springframework.web.bind.annotation.GetMapping("/adminDashboard/{token}")
+    public String adminDashboard(@org.springframework.web.bind.annotation.PathVariable String token) {
+        String error = service.validateToken(token, "admin");
+        if (error.isEmpty()) {
+            return "admin/adminDashboard";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    @org.springframework.web.bind.annotation.GetMapping("/doctorDashboard/{token}")
+    public String doctorDashboard(@org.springframework.web.bind.annotation.PathVariable String token) {
+        String error = service.validateToken(token, "doctor");
+        if (error.isEmpty()) {
+            return "doctor/doctorDashboard";
+        } else {
+            return "redirect:/";
+        }
+    }
+    
 
 // 1. Set Up the MVC Controller Class:
 //    - Annotate the class with `@Controller` to indicate that it serves as an MVC controller returning view names (not JSON).
