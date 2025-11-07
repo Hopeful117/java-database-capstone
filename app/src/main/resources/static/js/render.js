@@ -3,20 +3,20 @@
 function selectRole(role) {
   setRole(role);
   const token = localStorage.getItem('token');
-  if (role === "admin") {
-    if (token) {
-      window.location.href = `/adminDashboard/${token}`;
-    }
-  } if (role === "patient") {
+
+  if (role === "admin" && token) {
+    window.location.href = `/adminDashboard/${token}`;
+  } else if (role === "patient") {
     window.location.href = "/pages/patientDashboard.html";
-  } else if (role === "doctor") {
-    if (token) {
-      window.location.href = `/doctorDashboard/${token}`;
-    } else if (role === "loggedPatient") {
-      window.location.href = "loggedPatientDashboard.html";
-    }
+  } else if (role === "doctor" && token) {
+    window.location.href = `/doctorDashboard/${token}`;
+  } else if (role === "loggedPatient") {
+    window.location.href = "loggedPatientDashboard.html";
+  } else {
+    console.error("Role or token not valid for redirection");
   }
 }
+
 
 
 function renderContent() {

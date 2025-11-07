@@ -1,11 +1,16 @@
-import { openModal } from '../util/modal.js';
-import { BASE_API_URL } from '../config/config.js';
+import {openModal} from '../components/modals.js';
+import {API_BASE_URL} from '../config/config.js';
 
-const ADMIN_API = `${BASE_API_URL}/api/admin`;
-const DOCTOR_API = `${BASE_API_URL}/api/doctor`;
+
+
+const ADMIN_API = `${API_BASE_URL}/admin`;
+const DOCTOR_API = `${API_BASE_URL}/doctor`;
+const PATIENT_API = `${API_BASE_URL}/patient`;
 window.onload = function() {
   const adminLoginBtn = document.getElementById('adminLogin');
   const doctorLoginBtn = document.getElementById('doctorLogin');
+  const patientLoginBtn = document.getElementById('patientLogin');
+  
 
   if (adminLoginBtn) {
     adminLoginBtn.addEventListener('click', () => {
@@ -18,15 +23,17 @@ window.onload = function() {
       openModal('doctorLogin');
     });
   }
+  if (patientLoginBtn) {
+    patientLoginBtn.addEventListener('click', () => {
+      openModal('patientLogin');
+    });
+  }
 }
-window.adminLoginHandler = async function() {
+export async function adminLoginHandler() {
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
 
-  const admin = {
-    username: username,
-    password: password
-  };
+  const admin = { username, password };
 
   try {
     const response = await fetch(ADMIN_API, {
@@ -37,19 +44,25 @@ window.adminLoginHandler = async function() {
       body: JSON.stringify(admin)
     });
 
-    if (response.ok) {
-      const data = await response.json();
+    const data = await response.json(); // ✅ On parse JSON à tous les coups
+
+    if (response.ok && data.token) {
       localStorage.setItem('token', data.token);
       selectRole('admin');
     } else {
-      alert('Invalid admin credentials. Please try again.');
+      alert(data.message || 'Invalid credentials');
     }
+
   } catch (error) {
+    console.error('Login error:', error);
     alert('An error occurred during admin login. Please try again later.');
   }
 }
 
-window.doctorLoginHandler = async function() {
+window.adminLoginHandler = adminLoginHandler;
+
+
+ export  async function doctorLoginHandler() {
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
 
@@ -59,7 +72,7 @@ window.doctorLoginHandler = async function() {
   };
 
   try {
-    const response = await fetch(DOCTOR_API, {
+    const response = await fetch(DOCTOR_API+"/login", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -79,3 +92,4 @@ window.doctorLoginHandler = async function() {
     alert('An error occurred during doctor login. Please try again later.');
   }
 }
+window.doctorLoginHandler = doctorLoginHandler;

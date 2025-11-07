@@ -3,28 +3,32 @@ package com.project.back_end.mvc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.project.back_end.services.UserService;
+
 @Controller
 public class DashboardController {
+   
     @Autowired
-    private com.project.back_end.services.Service service;
+    private com.project.back_end.services.TokenService tokenService;
 
     @org.springframework.web.bind.annotation.GetMapping("/adminDashboard/{token}")
     public String adminDashboard(@org.springframework.web.bind.annotation.PathVariable String token) {
-        String error = service.validateToken(token, "admin");
-        if (error.isEmpty()) {
+        
+        boolean error = tokenService.validateToken(token,"admin");
+        if (error==false) {
             return "admin/adminDashboard";
         } else {
-            return "redirect:/";
+            return "redirect:/index.html";
         }
     }
 
     @org.springframework.web.bind.annotation.GetMapping("/doctorDashboard/{token}")
     public String doctorDashboard(@org.springframework.web.bind.annotation.PathVariable String token) {
-        String error = service.validateToken(token, "doctor");
-        if (error.isEmpty()) {
+        boolean error = tokenService.validateToken(token, "doctor");
+        if (error==false) {
             return "doctor/doctorDashboard";
         } else {
-            return "redirect:/";
+            return "redirect:/index.";
         }
     }
     

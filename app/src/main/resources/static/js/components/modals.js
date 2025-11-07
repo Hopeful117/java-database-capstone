@@ -4,7 +4,8 @@ export function openModal(type) {
   if (type === 'addDoctor') {
     modalContent = `
          <h2>Add Doctor</h2>
-         <input type="text" id="doctorName" placeholder="Doctor Name" class="input-field">
+         <input type="text" id="doctorFirstName" placeholder="Doctor Name" class="input-field">
+         <input type="text" id="doctorLastName" placeholder="Doctor Surname" class="input-field">
          <select id="specialization" class="input-field select-dropdown">
              <option value="">Specialization</option>
                         <option value="cardiologist">Cardiologist</option>
@@ -80,11 +81,11 @@ export function openModal(type) {
   };
 
   if (type === "patientSignup") {
-    document.getElementById("signupBtn").addEventListener("click", signupPatient);
+    document.getElementById("signupBtn").addEventListener("click", patientSignup);
   }
 
   if (type === "patientLogin") {
-    document.getElementById("loginBtn").addEventListener("click", loginPatient);
+    document.getElementById("loginBtn").addEventListener("click", patientLogin);
   }
 
   if (type === 'addDoctor') {
@@ -99,3 +100,4 @@ export function openModal(type) {
     document.getElementById('doctorLoginBtn').addEventListener('click', doctorLoginHandler);
   }
 }
+window.openModal = openModal;

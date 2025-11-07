@@ -1,5 +1,6 @@
+import { getPatientData } from "/js/services/patientServices.js";
 import { deleteDoctor } from "/js/services/doctorServices.js";
-import { fetchPatientDetails } from "/js/services/patientServices.js";
+
 export function createDoctorCard(doctor) {
   const card = document.createElement("div");
   card.className = "doctor-card";
@@ -10,16 +11,16 @@ export function createDoctorCard(doctor) {
   infoContainer.className = "doctor-info";
 
   const nameElem = document.createElement("h3");
-  nameElem.textContent = `Dr. ${doctor.name}`;
+  nameElem.textContent = `Dr. ${doctor.last_name}`;
 
   const specializationElem = document.createElement("p");
-  specializationElem.textContent = `Specialization: ${doctor.specialization}`;
+  specializationElem.textContent = `Specialization: ${doctor.specialty}`;
 
   const emailElem = document.createElement("p");
   emailElem.textContent = `Email: ${doctor.email}`;
 
   const availabilityElem = document.createElement("p");
-  availabilityElem.textContent = `Available Slots: ${doctor.availability.join(", ")}`;
+  availabilityElem.textContent = `Available Slots: ${doctor.availableTimes.join(", ")}`;
 
   infoContainer.appendChild(nameElem);
   infoContainer.appendChild(specializationElem);
@@ -63,7 +64,7 @@ export function createDoctorCard(doctor) {
         window.location.href = "/";
         return;
       }
-      const patientResponse = await fetchPatientDetails(token);
+      const patientResponse = await getPatientData(token);
       if (patientResponse.success) {
         const patient = patientResponse.data;
         openBookingOverlay(doctor, patient);

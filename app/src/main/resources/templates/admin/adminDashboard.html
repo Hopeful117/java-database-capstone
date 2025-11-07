@@ -4,12 +4,14 @@
         <head>
             <meta charset="UTF-8"/>
             <title>Admin Dashboard</title>
+            <link rel="icon" type="image/png" th:href="@{/assets/images/logo/logo.png}">
             <link rel="stylesheet" th:href="@{/assets/css/adminDashboard.css}" />
             <link rel="stylesheet" th:href="@{/assets/css/style.css}" />
             <script th:src="@{/js/components/header.js}" defer></script>
             <script th:src="@{/js/components/footer.js}" defer></script>
             <script th:src="@{/js/render.js}" defer></script>
             <script th:src="@{/js/util.js}" defer></script>
+            
         </head>
         <body onload="renderContent()">
             <div class="container">
@@ -18,21 +20,26 @@
                     <main class="main-content">
                         <input type="text" id="searchBar" placeholder="Search by doctor name" />
                         <select id="timeFilter">
-                            <option value="">Sorting by time</option>
-                            <option value="">Filtering by specialty</option>
+                            <option value="null">Sorting by time</option>
+                           
+                        </select>
+                        <select id="specialtyFilter">   
+                            <option value="null">Sorting by specialty</option>
                         </select>
                         <div id="content"></div>
                       
                         
                     </main>
+                    </div>
                     <div id="footer"></div>
             </div>
         <div id="modal" class="modal" hidden>
             <span id="closeModal" class="close">&times;</span>
             <div id="modal-body"></div>
         </div>
-        <script type="module" src="../js/services/adminDashboard.js" defer></script>
-        <script type="module" src="../js/components/doctorCard.js" defer></script>
+        <script type="module" th:src="@{/js/adminDashboard.js}" defer></script>
+        <script type="module" th:src="@{/js/components/doctorCard.js}" defer></script>
+
         </body>
 
 

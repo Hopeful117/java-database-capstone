@@ -60,15 +60,15 @@ public class Appointment {
   private Location location;
 
   @Transient
-  private LocalDateTime getEndTime() {
+  public LocalDateTime getEndTime() {
     return this.appointmentTime.plusMinutes(this.durationInMinutes);
   }
   @Transient
-  private LocalDate getAppointmentDate() {
+  public LocalDate getAppointmentDate() {
     return this.appointmentTime.toLocalDate();
   }
   @Transient
-  private LocalTime getAppointmentTimeOnly() {
+  public LocalTime getAppointmentTimeOnly() {
     return this.appointmentTime.toLocalTime();
   }
 

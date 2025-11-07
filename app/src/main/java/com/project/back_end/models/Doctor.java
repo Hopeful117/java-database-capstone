@@ -9,6 +9,7 @@ import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -51,7 +52,7 @@ private String password;
 @Pattern(regexp="\\d{10}", message="Phone number must be 10 digits")
 private String phone;
 
-@ElementCollection
+@ElementCollection(fetch = FetchType.EAGER)
 @CollectionTable(
     name = "doctor_available_times",
     joinColumns = @JoinColumn(name = "doctor_id")  

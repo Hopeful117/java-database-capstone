@@ -1,6 +1,6 @@
-import { BASE_API_URL } from '../config.js';
+import { API_BASE_URL } from '../config/config.js';
 
-const DOCTOR_API = `${BASE_API_URL}/api/doctor`;
+const DOCTOR_API = `${API_BASE_URL}/doctor`;
 
 export async function getDoctors() {
   try {
@@ -34,17 +34,17 @@ export async function deleteDoctor(doctorId, token) {
 
 export async function saveDoctor(doctor, token) {
   try {
-    const response = await fetch(`${DOCTOR_API}/save/${token}`, {
+    const response = await fetch(`${DOCTOR_API}/${token}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(doctor)
     });
-    const data = await response.json();
+    const data = await response.text();
     return {
-      success: data.success,
-      message: data.message
+      success: response.ok,
+      message: data
     };
   } catch (error) {
     console.error("Error saving doctor:", error);

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Clinic Manager</title>
-    <link rel="icon" type="image/png" href="../assets/images/logo/Logo.png">
+    <link rel="icon" type="image/png" href="../assets/images/logo/logo.png">
     <link rel="stylesheet" href="../assets/css/index.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <script src="../js/util.js" defer></script>
@@ -15,13 +15,13 @@
 <body>
     <div class="container">
         <div class="wrapper">
-            <div id="header-placeholder"></div>
+            <div id="header"></div>
             <main class="main-content">
                 <h2>Select Your Role</h2>
                 <div class="role-buttons">
-                    <button id="admin-btn" onclick="openLoginModal('Admin')">Admin</button>
-                    <button id="patient-btn" onclick="openLoginModal('Patient')">Patient</button>
-                    <button id="doctor-btn" onclick="openLoginModal('Doctor')">Doctor</button>
+                    <button id="adminLogin">Admin</button>
+                    <button id="patientLogin">Patient</button>
+                    <button id="doctorLogin">Doctor</button>
 
                 </div>
                 <div id="modal" class="modal" hidden>
@@ -30,9 +30,9 @@
                         <div id="modal-body"></div>
                     </div>
             </main>
-            <div id="footer-placeholder"></div>
+            <div id="footer"></div>
         </div>
     </div>
-    <script type="module" src="../js/services/index.js" defer></script>
+    <script type="module" src="./js/services/index.js" defer></script>
 </body>
 </html>
