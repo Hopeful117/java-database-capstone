@@ -57,9 +57,10 @@ public boolean validateToken(String token, String user) {
     try {
         String email = extractEMail(token);
         String userLower = user.toLowerCase();
+        
         switch (userLower) {
             case "admin":
-                return adminRepository.findByUsername(userLower) != null;
+                return adminRepository.findByUsername(email) != null;
             case "doctor":
                 return doctorRepository.findByEmail(email) != null;
             case "patient":

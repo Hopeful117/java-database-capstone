@@ -109,3 +109,4 @@ export async function adminAddDoctor() {
     alert('An error occurred while adding the doctor: ' + error.message);
   }
 }
+window.adminAddDoctor = adminAddDoctor;

@@ -16,9 +16,11 @@ public class DashboardController {
         
         boolean error = tokenService.validateToken(token,"admin");
         if (error==false) {
-            return "admin/adminDashboard";
-        } else {
             return "redirect:/index.html";
+            
+        } else {
+            
+            return "admin/adminDashboard";
         }
     }
 
@@ -26,9 +28,11 @@ public class DashboardController {
     public String doctorDashboard(@org.springframework.web.bind.annotation.PathVariable String token) {
         boolean error = tokenService.validateToken(token, "doctor");
         if (error==false) {
-            return "doctor/doctorDashboard";
+              return "redirect:/index.";
+            
         } else {
-            return "redirect:/index.";
+          
+            return "doctor/doctorDashboard";
         }
     }
     

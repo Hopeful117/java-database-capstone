@@ -69,13 +69,11 @@ public ResponseEntity<?> saveDoctor(
         @PathVariable ("token") String token) {
     String role = "admin";
     ResponseEntity<Map<String, String>> validationResponse = service.validateToken(token, role);
-  
-    if(validationResponse.getBody() == null || validationResponse.getBody().get("status") == null) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token.");
-    }
-    if (!validationResponse.getBody().get("status").equals("Valid token")) {
+    if(!validationResponse.getStatusCode().equals(HttpStatus.OK)) {
         return ResponseEntity.status(validationResponse.getStatusCode()).body(validationResponse.getBody().get("message"));
     }
+  
+    
     int saveResult = doctorService.saveDoctor(doctor);
     if (saveResult == 1) {
         return ResponseEntity.ok("Doctor registered successfully.");
