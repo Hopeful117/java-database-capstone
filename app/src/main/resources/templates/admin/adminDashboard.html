@@ -18,14 +18,16 @@
                 <div class="wrapper">
                     <div id="header"></div>
                     <main class="main-content">
-                        <input type="text" id="searchBar" placeholder="Search by doctor name" />
-                        <select id="timeFilter">
+                        <input type="text" id="searchBar" class="searchBar" placeholder="Search by doctor name" />
+                        <div class="filter-wrapper">
+                        <select id="timeFilter" class="filter-select">
                             <option value="null">Sorting by time</option>
                            
                         </select>
-                        <select id="specialtyFilter">   
+                        <select id="specialtyFilter" class="filter-select">   
                             <option value="null">Sorting by specialty</option>
                         </select>
+                    </div>
                         <div id="content"></div>
                       
                         
