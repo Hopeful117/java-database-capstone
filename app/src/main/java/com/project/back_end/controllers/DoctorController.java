@@ -124,9 +124,9 @@ public ResponseEntity<?> deleteDoctor(
         @PathVariable("token") String token) {
     String role = "admin";
     ResponseEntity<Map<String, String>> validationResponse = service.validateToken(token, role);
-    if (!validationResponse.getBody().get("status").equals("Valid token")) {
-        return ResponseEntity.status(validationResponse.getStatusCode()).body(validationResponse.getBody().get("message"));
-    }
+   if(!validationResponse.getStatusCode().equals(HttpStatus.OK)) {
+       return ResponseEntity.status(validationResponse.getStatusCode()).body(validationResponse.getBody().get("message"));
+   }
     int deleteResult = doctorService.deleteDoctor(doctorId);
     if (deleteResult == 1) {
         return ResponseEntity.ok("Doctor deleted successfully.");
