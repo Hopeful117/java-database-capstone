@@ -34,6 +34,8 @@ export async function deleteDoctor(doctorId, token) {
 
 export async function saveDoctor(doctor, token) {
   try {
+    console.log("Doctor data sent:", doctor);
+
     const response = await fetch(`${DOCTOR_API}/${token}`, {
       method: 'POST',
       headers: {

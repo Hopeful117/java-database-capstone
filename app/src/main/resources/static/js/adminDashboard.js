@@ -80,7 +80,7 @@ export async function adminAddDoctor() {
   const phone = document.getElementById('doctorPhone').value;
   const password = document.getElementById('doctorPassword').value;
   const specialty = document.getElementById('specialization').value;
-  const availabilityElements = document.querySelectorAll('.availability-time:checked');
+  const availabilityElements = document.querySelectorAll('input[name="availability"]:checked');
   const availability = Array.from(availabilityElements).map(elem => elem.value);
   const token = localStorage.getItem('token');
   if (!token) {
@@ -94,7 +94,7 @@ export async function adminAddDoctor() {
     phone:phone,
     password:password,
     specialty:specialty,
-    availability:availability
+    availableTimes:availability
   };
   try {
     const response = await saveDoctor(doctor, token);
