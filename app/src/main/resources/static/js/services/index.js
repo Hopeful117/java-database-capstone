@@ -1,5 +1,6 @@
 import {openModal} from '../components/modals.js';
 import {API_BASE_URL} from '../config/config.js';
+import { patientLogin } from './patientServices.js';
 
 
 
@@ -9,7 +10,9 @@ const PATIENT_API = `${API_BASE_URL}/patient`;
 window.onload = function() {
   const adminLoginBtn = document.getElementById('adminLogin');
   const doctorLoginBtn = document.getElementById('doctorLogin');
-  const patientLoginBtn = document.getElementById('patientLogin');
+  const patientSelectBtn = document.getElementById('patientSelect');
+  const patientLoginBtn = document.getElementById('patientLoginBtn');
+  const patientSignupBtn = document.getElementById('patientSignupBtn');
   
 
   if (adminLoginBtn) {
@@ -23,12 +26,14 @@ window.onload = function() {
       openModal('doctorLogin');
     });
   }
-  if (patientLoginBtn) {
-    patientLoginBtn.addEventListener('click', () => {
-      openModal('patientLogin');
+  if (patientSelectBtn) {
+    patientSelectBtn.addEventListener('click', () => {
+      openModal('patientSelect');
     });
+  
   }
 }
+
 export async function adminLoginHandler() {
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
@@ -93,3 +98,28 @@ window.adminLoginHandler = adminLoginHandler;
   }
 }
 window.doctorLoginHandler = doctorLoginHandler;
+
+export async function patientLoginHandler() {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  const patient = {
+    email: email,
+    password: password
+  };
+try{
+  const response = await patientLogin(patient);
+  if (response.ok) {
+    const data = await response.json();
+    localStorage.setItem('token', data.token);
+    selectRole('loggedPatient');
+  } else {
+    alert('Invalid patient credentials. Please try again.');
+  } 
+}
+catch (error) {
+    console.error('Error during patient login:', error);
+    alert('An error occurred during patient login. Please try again later.');
+  }
+}
+window.patientLoginHandler = patientLoginHandler;

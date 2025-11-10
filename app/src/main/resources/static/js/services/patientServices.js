@@ -26,6 +26,7 @@ export async function patientSignup(data) {
     return { success: false, message: error.message }
   }
 }
+window.patientSignup = patientSignup;
 
 //For logging in patient
 export async function patientLogin(data) {

@@ -1,3 +1,5 @@
+
+
 // modals.js
 export function openModal(type) {
   let modalContent = '';
@@ -75,6 +77,12 @@ export function openModal(type) {
         <input type="password" id="password" placeholder="Password" class="input-field">
         <button class="dashboard-btn" id="doctorLoginBtn" >Login</button>
       `;
+  } else if(type==='patientSelect'){
+    modalContent=`
+      <h2>Login or Sign up</h2>
+      <button class="dashboard-btn" id="patientLoginBtn">Login</button>
+      <button class="dashboard-btn" id="patientSignupBtn">Sign Up</button>
+    `;
   }
 
   document.getElementById('modal-body').innerHTML = modalContent;
@@ -83,13 +91,15 @@ export function openModal(type) {
   document.getElementById('closeModal').onclick = () => {
     document.getElementById('modal').style.display = 'none';
   };
-
-  if (type === "patientSignup") {
-    document.getElementById("signupBtn").addEventListener("click", patientSignup);
+  if (type === 'patientSelect'){
+    document.getElementById('patientLoginBtn').addEventListener("click", () => openModal('patientLogin'));
+    document.getElementById('patientSignupBtn').addEventListener("click", () => openModal('patientSignup'));
   }
-
-  if (type === "patientLogin") {
-    document.getElementById("loginBtn").addEventListener("click", patientLogin);
+  if (type === 'patientSignup') {
+    document.getElementById('signupBtn').addEventListener("click", patientSignup);
+  }
+  if (type === 'patientLogin') {
+    document.getElementById('loginBtn').addEventListener("click", patientLoginHandler);
   }
 
   if (type === 'addDoctor') {
