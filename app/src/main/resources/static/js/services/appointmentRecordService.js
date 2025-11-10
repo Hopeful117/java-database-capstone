@@ -1,6 +1,6 @@
 // appointmentRecordService.js
 import { API_BASE_URL } from "../config/config.js";
-const APPOINTMENT_API = `${API_BASE_URL}/appointments`;
+const APPOINTMENT_API = `${API_BASE_URL}/appointment`;
 
 
 //This is for the doctor to get all the patient Appointments

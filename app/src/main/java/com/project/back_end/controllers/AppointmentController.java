@@ -48,8 +48,8 @@ public ResponseEntity<?> getAppointments (
         @PathVariable("token") String token) {
     String role = "doctor";
     ResponseEntity<Map<String,String>> validationResponse = service.validateToken(token, role);
-    if (validationResponse.equals("Valid token")) {
-        Long doctorId = Long.parseLong(validationResponse.getBody().get("id"));
+    if ((validationResponse.getStatusCode() == HttpStatus.OK)) {
+
         List<Appointment> appointments = appointmentService.getAppointments(token,appointmentDate, patientName);
         return ResponseEntity.ok(appointments);
     } else if (validationResponse.equals("Expired token")) {

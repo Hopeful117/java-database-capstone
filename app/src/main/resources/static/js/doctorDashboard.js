@@ -1,7 +1,7 @@
-import { getAllAppointments } from "./api/appointmentApi.js";
-import { createPatientRow } from "./components/patientRow.js";
+import { getAllAppointments } from "./services/appointmentRecordService.js";
+import { createPatientRow } from "./components/patientRows.js";
 
-const tableBody = document.getElementById("appointmentTableBody");
+const tableBody = document.getElementById("patientTableBody");
 let selectedDate = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
 const token = localStorage.getItem("token");
 let patientName = null; // For filtering by patient name
@@ -19,7 +19,7 @@ searchBar.addEventListener("input", (event) => {
 });
 
 // Today button event listener
-const todayBtn = document.getElementById("todayBtn");
+const todayBtn = document.getElementById("todayButton");
 todayBtn.addEventListener("click", () => {
   selectedDate = new Date().toISOString().split("T")[0];
   document.getElementById("datePicker").value = selectedDate;
@@ -29,7 +29,7 @@ todayBtn.addEventListener("click", () => {
 // Date picker event listener
 const datePicker = document.getElementById("datePicker");
 datePicker.addEventListener("change", (event) => {
-  selectedDate = event.target.value;
+  selectedDate = new Date(event.target.value).toISOString().split("T")[0];
   loadAppointments();
 });
 
@@ -48,12 +48,12 @@ async function loadAppointments() {
 
     appointments.forEach((appointment) => {
       const patient = {
-        id: appointment.patientId,
-        name: appointment.patientName,
-        phone: appointment.patientPhone,
-        email: appointment.patientEmail,
+        id: appointment.patient.patientId,
+        name: appointment.patient.last_name,
+        phone: appointment.patient.phone,
+        email: appointment.patient.email,
       };
-      const row = createPatientRow(appointment, patient);
+      const row = createPatientRow(patient,appointment.id,appointment.doctor.id);
       tableBody.appendChild(row);
     });
   } catch (error) {

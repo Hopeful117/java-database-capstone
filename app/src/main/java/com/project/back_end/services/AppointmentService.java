@@ -90,11 +90,12 @@ public class AppointmentService {
 
     @Transactional
     public List<Appointment> getAppointments(String token, LocalDate date, String patientName) {
-        Long doctorId = Long.parseLong(service.validateToken(token, "doctor").getBody().get("id"));
+        String doctorEmail =tokenService.extractEMail(token) ;
+        Long doctorId = doctorRepository.findByEmail(doctorEmail).getId();
         LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = date.atTime(23, 59, 59);
         List<Appointment> appointments = appointmentRepository.findByDoctorIdAndAppointmentTimeBetween(doctorId,startOfDay,endOfDay);
-        if (patientName != null && !patientName.isEmpty()) {
+        if (patientName != null && !patientName.isEmpty()&& !patientName.equals("null")) {
             return appointments.stream()
                     .filter(appointment -> appointment.getPatient().getLast_name().toLowerCase().contains(patientName.toLowerCase()))
                     .toList();
