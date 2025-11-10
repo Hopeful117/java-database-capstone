@@ -61,7 +61,7 @@ export async function getPatientData(token) {
 
 export async function getPatientAppointments(id, token) {
   try {
-    const response = await fetch(`${PATIENT_API}/appointment/${id}/${encodeURIComponent(token)}`);
+    const response = await fetch(`${PATIENT_API}/appointment/${id}/${token}`);
     console.log(response)
     const data = await response.json();
     console.log(data)

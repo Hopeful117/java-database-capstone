@@ -48,7 +48,7 @@ public int createPatient(Patient patient) {
 
 @Transactional
 public ResponseEntity<List<AppointmentDTO>> getPatientAppointment(Long patientId, String token) {
-    if (token == null || !token.startsWith("Bearer ")) {
+    if (token == null ) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
     if (patientId == null) {
@@ -57,7 +57,7 @@ public ResponseEntity<List<AppointmentDTO>> getPatientAppointment(Long patientId
 
     String tokenEmail;
     try {
-        tokenEmail = tokenService.extractEMail(token.substring(7));
+        tokenEmail = tokenService.extractEMail(token);
     } catch (Exception e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
