@@ -68,7 +68,7 @@ public ResponseEntity<?> createPatient(@Valid @RequestBody Patient patient) {
 @PostMapping("/login")
 public ResponseEntity<?> login(@RequestBody Login login) {
     ResponseEntity<Map<String, String>> loginResponse = service.validatePatientLogin(login);
-    if (loginResponse.getBody().get("status").equals("Login successful")) {
+    if (loginResponse.getStatusCode().equals(HttpStatus.OK)) {
         return ResponseEntity.ok(loginResponse.getBody());
     } else {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(loginResponse.getBody().get("status"));

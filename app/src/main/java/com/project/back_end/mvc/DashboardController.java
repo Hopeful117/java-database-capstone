@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.project.back_end.services.UserService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class DashboardController {
@@ -35,6 +38,9 @@ public class DashboardController {
             return "doctor/doctorDashboard";
         }
     }
+   
+
+    
     
 
 // 1. Set Up the MVC Controller Class:

@@ -99,27 +99,55 @@ window.adminLoginHandler = adminLoginHandler;
 }
 window.doctorLoginHandler = doctorLoginHandler;
 
-export async function patientLoginHandler() {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
+window.signupPatient = async function () {
+  try {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const phone = document.getElementById("phone").value;
+    const address = document.getElementById("address").value;
 
-  const patient = {
-    email: email,
-    password: password
-  };
-try{
-  const response = await patientLogin(patient);
-  if (response.ok) {
-    const data = await response.json();
-    localStorage.setItem('token', data.token);
-    selectRole('loggedPatient');
-  } else {
-    alert('Invalid patient credentials. Please try again.');
-  } 
-}
-catch (error) {
-    console.error('Error during patient login:', error);
-    alert('An error occurred during patient login. Please try again later.');
+    const data = { name, email, password, phone, address };
+    const { success, message } = await patientSignup(data);
+    if (success) {
+      alert(message);
+      document.getElementById("modal").style.display = "none";
+      window.location.reload();
+    }
+    else alert(message);
+  } catch (error) {
+    console.error("Signup failed:", error);
+    alert("❌ An error occurred while signing up.");
   }
+};
+
+window.loginPatient = async function () {
+  try {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const data = {
+      email,
+      password
+    }
+    console.log("loginPatient :: ", data)
+    const response = await patientLogin(data);
+    console.log("Status Code:", response.status);
+    console.log("Response OK:", response.ok);
+    if (response.ok) {
+      const result = await response.json();
+      console.log(result);
+      selectRole('loggedPatient');
+      localStorage.setItem('token', result.token)
+      window.location.href = '/pages/patientDashboard.html';
+    } else {
+      alert('❌ Invalid credentials!');
+    }
+  }
+  catch (error) {
+    alert("❌ Failed to Login : ", error);
+    console.log("Error :: loginPatient :: ", error)
+  }
+
+
 }
-window.patientLoginHandler = patientLoginHandler;
