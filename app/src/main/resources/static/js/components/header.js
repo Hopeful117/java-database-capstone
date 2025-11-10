@@ -39,6 +39,7 @@ function renderHeader() {
       <a href="#" onclick="logout()">Logout</a>`;
   } else if (role === "patient") {
     headerContent += `
+      <a href="/">Home</a>
       <button id="patientLogin" class="adminBtn">Login</button>
       <button id="patientSignup" class="adminBtn">Sign Up</button>`;
   } else if (role === "loggedPatient") {
@@ -53,20 +54,10 @@ function renderHeader() {
   </header>`;
 
   headerDiv.innerHTML = headerContent;
-  attachHeaderButtonListeners();
+ 
 }
 
-function attachHeaderButtonListeners() {
-  const patientLoginBtn = document.getElementById("patientLogin");
-  if (patientLoginBtn) {
-    patientLoginBtn.addEventListener("click", () => openLoginModal("Patient"));
-  }
 
-  const patientSignupBtn = document.getElementById("patientSignup");
-  if (patientSignupBtn) {
-    patientSignupBtn.addEventListener("click", () => openSignupModal("Patient"));
-  }
-}
 
 function logout() {
   localStorage.removeItem("userRole");

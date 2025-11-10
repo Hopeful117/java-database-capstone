@@ -38,7 +38,7 @@ public ResponseEntity<?> getPatient(
         @PathVariable("token") String token) {
     String role = "patient";
     ResponseEntity<Map<String, String>> validationResponse = service.validateToken(token, role);
-    if (validationResponse.getBody().get("status").equals("Valid token")) {
+    if (validationResponse.getStatusCode().equals(HttpStatus.OK)) {
     ResponseEntity<Patient> patientResponse =patientService.getPatientDetails(token);
     return patientResponse;
     } else if (validationResponse.getBody().get("status").equals("Expired token")) {
@@ -81,7 +81,7 @@ public ResponseEntity<?> getPatientAppointment(
         @PathVariable("token") String token){
     String role = "patient";
     ResponseEntity<Map<String, String>> validationResponse = service.validateToken(token, role);
-    if (validationResponse.getBody().get("status").equals("Valid token")) {
+    if (validationResponse.getStatusCode().equals(HttpStatus.OK)) {
     ResponseEntity<?> appointmentResponse =patientService.getPatientAppointment(patientId,token);
     return appointmentResponse;
     } else if (validationResponse.getBody().get("status").equals("Expired token")) {

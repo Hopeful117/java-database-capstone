@@ -188,20 +188,22 @@ public ResponseEntity<List<AppointmentDTO>> filterByDoctorAndCondition(Long pati
 }
 @Transactional
 public ResponseEntity<Patient> getPatientDetails(String token) {
-    if (token == null || !token.startsWith("Bearer ")) {
+    if (token == null ) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
     String tokenEmail;
     try {
-        tokenEmail = tokenService.extractEMail(token.substring(7));
+        tokenEmail = tokenService.extractEMail(token);
+        Patient patient = patientRepository.findByEmail(tokenEmail);
+            if (patient == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+            }
+        return ResponseEntity.ok(patient);
     } catch (Exception e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
-    Patient patient = patientRepository.findByEmail(tokenEmail);
-    if (patient == null) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
-    return ResponseEntity.ok(patient);
+ 
     
 }
 }

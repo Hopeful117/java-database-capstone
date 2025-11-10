@@ -16,10 +16,10 @@ async function initializePage() {
 
     const patient = await getPatientData(token);
     if (!patient) throw new Error("Failed to fetch patient details");
+    console.log("Patient Details:", patient);
+    patientId = patient.patientId;
 
-    patientId = Number(patient.id);
-
-    const appointmentData = await getPatientAppointments(patientId, token, "patient") || [];
+    const appointmentData = await getPatientAppointments(patientId, token) || [];
     allAppointments = appointmentData.filter(app => app.patientId === patientId);
 
     renderAppointments(allAppointments);

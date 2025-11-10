@@ -3,6 +3,7 @@ import { API_BASE_URL } from "../config/config.js";
 const PATIENT_API = API_BASE_URL + '/patient'
 
 
+
 //For creating a patient in db
 export async function patientSignup(data) {
   try {
@@ -48,27 +49,29 @@ export async function getPatientData(token) {
   try {
     const response = await fetch(`${PATIENT_API}/${token}`);
     const data = await response.json();
-    if (response.ok) return data.patient;
-    return null;
+    console.log(data);
+    if (response.ok) return data;
+    
   } catch (error) {
     console.error("Error fetching patient details:", error);
     return null;
   }
 }
 
-// the Backend API for fetching the patient record(visible in Doctor Dashboard) and Appointments (visible in Patient Dashboard) are same based on user(patient/doctor).
-export async function getPatientAppointments(id, token, user) {
+
+export async function getPatientAppointments(id, token) {
   try {
-    const response = await fetch(`${PATIENT_API}/${id}/${user}/${token}`);
+    const response = await fetch(`${PATIENT_API}/appointment/${id}/${encodeURIComponent(token)}`);
+    console.log(response)
     const data = await response.json();
-    console.log(data.appointments)
+    console.log(data)
     if (response.ok) {
-      return data.appointments;
+      return data;
     }
-    return null;
+    
   }
   catch (error) {
-    console.error("Error fetching patient details:", error);
+    console.error("Error fetching patient appointments:", error);
     return null;
   }
 }
