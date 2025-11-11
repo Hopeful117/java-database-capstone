@@ -92,8 +92,17 @@ public class AppointmentService {
     public List<Appointment> getAppointments(String token, LocalDate date, String patientName) {
         String doctorEmail =tokenService.extractEMail(token) ;
         Long doctorId = doctorRepository.findByEmail(doctorEmail).getId();
-        LocalDateTime startOfDay = date.atStartOfDay();
-        LocalDateTime endOfDay = date.atTime(23, 59, 59);
+        LocalDateTime startOfDay;
+        LocalDateTime endOfDay;
+        if (date != null) {
+         startOfDay = date.atStartOfDay();
+         endOfDay = date.atTime(23, 59, 59);
+        }
+        else {
+            startOfDay = LocalDateTime.of(1900, 1, 1, 0, 0);  // très ancienne date
+            endOfDay = LocalDateTime.of(3000, 1, 1, 23, 59, 59); //
+        }
+            
         List<Appointment> appointments = appointmentRepository.findByDoctorIdAndAppointmentTimeBetween(doctorId,startOfDay,endOfDay);
         if (patientName != null && !patientName.isEmpty()&& !patientName.equals("null")) {
             return appointments.stream()

@@ -2,7 +2,7 @@ import { getAllAppointments } from "./services/appointmentRecordService.js";
 import { createPatientRow } from "./components/patientRows.js";
 
 const tableBody = document.getElementById("patientTableBody");
-let selectedDate = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+let selectedDate = null;// YYYY-MM-DD
 const token = localStorage.getItem("token");
 let patientName = null; // For filtering by patient name
 
@@ -29,9 +29,12 @@ todayBtn.addEventListener("click", () => {
 // Date picker event listener
 const datePicker = document.getElementById("datePicker");
 datePicker.addEventListener("change", (event) => {
+  if(event.target.value === "") {
+    selectedDate = null;
+  } else {
   selectedDate = new Date(event.target.value).toISOString().split("T")[0];
   loadAppointments();
-});
+}});
 
 // Function to load appointments based on selected date and patient name
 async function loadAppointments() {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.back_end.models.Appointment;
@@ -43,10 +44,11 @@ public class AppointmentController {
 
 @GetMapping("/{appointmentDate}/{patientName}/{token}")
 public ResponseEntity<?> getAppointments (
-        @PathVariable("appointmentDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate appointmentDate,
-        @PathVariable("patientName") String patientName,
+        @PathVariable("appointmentDate")@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate appointmentDate,
+        @PathVariable("patientName") @RequestParam(required = false) String patientName,
         @PathVariable("token") String token) {
     String role = "doctor";
+
     ResponseEntity<Map<String,String>> validationResponse = service.validateToken(token, role);
     if ((validationResponse.getStatusCode() == HttpStatus.OK)) {
 
